@@ -1,0 +1,35 @@
+<div>
+  <h3>{{user.first_name}} posted a topic:</h3>
+  <p>
+    Topic: {{topic.topic}}
+  </p>
+  <p>
+    Description: {{topic.description}}
+  </p>
+</div>
+<div>
+  <form>
+    Post your answer here:<br>
+    <textarea  rows="8" cols="40" ng-model = 'answer.answer'></textarea>
+    <button ng-click = "post(answer)">Post</button>
+  </form>
+
+</div>
+
+<hr>
+
+<div ng-repeat = 'answer in topic.answers'>
+  <h3>
+    Answer: <a href="#/userprofile/{{answer._user._id}}">{{answer._user.first_name}}</a>: {{answer.answer}}
+  </h3>
+  {{answer.likes}} <button type="button" ng-click = "incrementL()">like</button> {{answer.dislikes}} <button type="button" ng-click = "incrementD()">hate</button>
+  <div ng-repeat = 'comment in answer.comments'>
+    <p>
+      <a href="#/userprofile/{{comment._user._id}}">{{comment._user.first_name}}</a>: {{comment.comment}}
+    </p>
+  </div>
+  <form>
+    <input type="text" ng-model = 'comment.comment'>
+    <button ng-click='addComment(comment, answer._id)'>Comment</button>
+  </form>
+</div>

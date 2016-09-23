@@ -1,0 +1,16 @@
+<div ng-controller='userController'>
+  <fieldset>
+    <legend>Register</legend>
+    <form>
+      <label>First Name: <input type="text" ng-model='user.first_name'></label><br>
+      <label>Last Name: <input type="text" ng-model='user.last_name'></label><br>
+      <label>Email: <input type="text" ng-model='user.email'></label><br>
+      <label>Password: <input type="text" ng-model='user.password'></label><br>
+      <label>Confirm Password: <input type="text" ng-model='user.conpass'></label><br>
+      <button ng-click='register(user)'>Register</button>
+    </form>
+</fieldset>
+<div ng-repeat='error in err'>
+  <p>{{error}}</p>
+</div>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <meta charset="utf-8">
+    <title>Belt Review</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src='services/app.js'></script>
+    <script src='factories/userFactory.js'></script>
+    <script src='factories/dashboardFactory.js'></script>
+    <script src='factories/topicFactory.js'></script>
+    <script src='controllers/userController.js'></script>
+    <script src='controllers/dashboardController.js'></script>
+    <script src='controllers/topicController.js'></script>
+  </head>
+  <body>
+  <div class="container">
+    <h1>Login or Register</h1>
+    <a href="#/register">Register</a>
+    <a href="#/login">Log In</a>
+    <div ng-view=''>
+    </div>
+  </div>
+
+  </body>
+</html>
