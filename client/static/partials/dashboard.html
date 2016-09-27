@@ -1,36 +1,19 @@
 <div ng-controller = 'dashboardController'>
   <button ng-click='logout()'>Log Out</button>
-  <h4>Welcome, {{user.first_name}}</h4>
-  Search: <input type="text" ng-model = 'search'>
+  <h4>Hi {{user.first_name}}!</h4>
+  Search: <input type="text" ng-model = 'search'><br>
+  <a href="#/addquestion">Add a Question!</a><br>
 
   <table>
     <tr>
-      <th>Category</th>
-      <th>Topic</th>
-      <th>User Name</th>
-      <th>Posts</th>
+      <th>Questions</th>
+      <th>Answers</th>
+      <th>Action</th>
     </tr>
     <tr ng-repeat = "topic in topics | orderBy: '-created_at' | filter : search">
-      <td>{{topic.category}}</td>
-      <td><a href="#/topic/{{topic._id}}">{{topic.topic}}</a></td>
-      <td><a href="#/userprofile/{{topic._user._id}}">{{topic._user.first_name}}</a></td>
-      <td>{{topic.count}}</td>
+      <td>{{topic.topic}}</a></td>
+      <td>{{topic.answerCount}}</td>
+      <td><a href="#/topic/{{topic._id}}">Show</a>    <a href="#/topic/{{topic._id}}/newanswer">Answer</a></td>
     </tr>
   </table>
-  <fieldset>
-  <legend>Add a new Topic</legend>
-  <form ng-submit="createTopic(topic) ">
-    <label>Topic: <input type="text" ng-model='topic.topic'></label><br>
-    <label>Description: <textarea ng-model='topic.description'></textarea></label><br>
-    <label>Category: <select ng-model='topic.category'><br>
-                    <option>Python</option>
-                    <option>HTML</option>
-                    <option>Ruby</option>
-                    <option>Mean</option>
-                    <option>iOS</option>
-                    </select>
-                    <button>Submit</button>
-  </label>
-  </form>
-</fieldset>
 </div>

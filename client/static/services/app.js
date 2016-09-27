@@ -15,20 +15,27 @@ app.config(function ($routeProvider, $httpProvider) {
 });
   $routeProvider
     .when('/register',{
-      templateUrl: '/partials/register.html'
+      templateUrl: '/partials/register.html',
     })
     .when('/login',{
-      templateUrl:'/partials/login.html'
+      templateUrl:'/partials/login.html',
     })
     .when('/dashboard',{
-      templateUrl:'/partials/dashboard.html'
+      templateUrl:'/partials/dashboard.html',
     })
     .when('/userprofile/:id',{
-      templateUrl:'/partials/userprofile.html'
+      templateUrl:'/partials/userprofile.html',
+    })
+    .when('/topic/:id/newanswer',{
+      templateUrl:'/partials/topic.html',
+      controller: 'topicController',
     })
     .when('/topic/:id',{
-      templateUrl:'/partials/topic.html',
-      controller: 'topicController'
+      templateUrl:'/partials/show.html',
+      controller: 'topicController',
+    })
+    .when('/addquestion',{
+      templateUrl: '/partials/addquestion.html',
     })
     .otherwise({
       redirectTo:'/'

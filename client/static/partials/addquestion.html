@@ -1,0 +1,16 @@
+<div ng-controller = 'dashboardController'>
+<a href="#/dashboard">Home</a>
+<button ng-click='logout()'>Log Out</button>
+<fieldset>
+<legend>NEW QUESTION!</legend>
+<form ng-submit="createTopic(topic) ">
+  <label>Question: <input type="text" ng-model='topic.topic'></label><br>
+  <label>Description: <textarea ng-model='topic.description'></textarea></label><br>
+  <button>Submit</button>
+</label>
+</form>
+</fieldset>
+<div ng-repeat='error in err'>
+  <p>{{error}}</p>
+</div>
+</div>

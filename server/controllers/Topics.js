@@ -19,7 +19,7 @@ module.exports = {
         console.log('Did not find user');
         res.sendStatus(400);
       } else{
-        var topic = new Topic({topic:req.body.topic, description:req.body.description, category:req.body.category, created_at: new Date()});
+        var topic = new Topic({topic:req.body.topic, description:req.body.description, created_at: new Date()});
         topic._user = user._id;
         user.topics.push(topic);
         topic.save(function(err){
@@ -27,7 +27,7 @@ module.exports = {
             if(err){
               console.log('something went wrong with adding the topic');
             } else{
-              console.log('it worked man...you now have a shitty topic to mindfuck others...inception...you like it fuckface?!! hat you so much, hope you die...thanks for using my website though...#blessed...you are the best...');
+              console.log('adding topic was good');
               res.sendStatus(200)
             }
           })
@@ -36,9 +36,11 @@ module.exports = {
     })
   },
   getAll: function(req, res){
-    Topic.find({}).populate('_user').exec(function(err, topics){
+    console.log("*********");
+    console.log(req.body);
+    Topic.find({}).exec(function(err, topics){
       if(err){
-        console.log('get the fuck out of here, could not get the topics');
+        console.log('could not get the topics');
       } else{
         res.json(topics)
       }
@@ -75,6 +77,13 @@ module.exports = {
                   if(err){
                     console.log('damnit it is all fucked up');
                   } else{
+                    Topic.update({_id:req.session.topic._id}, {$inc:{answerCount:1}},function(err){
+                      if(err){
+                        console.log('could not increment post');
+                      } else{
+                        console.log('increment post');
+                      }
+                    })
                     console.log('holy shit it worked');
                     res.sendStatus(200);
                   }
@@ -86,44 +95,24 @@ module.exports = {
       }
     })
   },
-  addComment: function(req, res){
-    console.log("********************");
-    console.log(req.params.id);
-    User.findOne({_id:req.session.user._id}, function(err, user){
+  like: function(req,res){
+    Answer.findOne({_id:req.params.id}, function(err, answer){
       if(err){
-        console.log('did not find user for comment');
+        console.log('Nope it did not work');
       } else{
-        Answer.findOne({_id:req.params.id}, function(err, answer){
-          if(err){
-            console.log('did not find answer for comment');
-          } else{
-            var comment = new Comment({comment:req.body.comment});
-            comment._user = user._id;
-            user.comments.push(comment);
-            comment._answer = answer._id;
-            answer.comments.push(comment);
-            comment.save(function(err){
-              user.save(function(err){
-                answer.save(function(err){
-                  if(err){
-                    console.log('god fuck we fucked up with comments');
-                  } else{
-                    User.update({_id:req.session.user._id}, {$inc: {commentCount: 1}}, function(err){
-                      if(err){
-                        console.log('could not increment');
-                      } else{
-                        console.log('just incremented');
-                      }
-                    })
-                    console.log('holy shit comments work');
-                    res.sendStatus(200);
-                  }
-                })
-              })
-            })
+        Answer.update({_id:req.params.id}, {$inc:{likes: 1}})
+        .populate('likes')
+        .exec(function(err, likes){
+          if (err){
+            res.status(500).send("likes did not update");
+          }else{
+            console.log(likes);
+            console.log('liking');
+            res.sendStatus(200); //i have no idea what to do now. I have tried everything
           }
         })
+
       }
     })
-  }
+	},
 }

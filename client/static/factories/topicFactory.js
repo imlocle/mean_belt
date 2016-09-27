@@ -1,6 +1,7 @@
 app.factory('topicFactory',['$http','$location', function($http, $location){
   var topicObject = {};
   topicObject.createTopic = function(topic, callback){
+    console.log(topic);
     $http({
       method:'POST',
       url:'/topic',
@@ -17,8 +18,8 @@ app.factory('topicFactory',['$http','$location', function($http, $location){
       url: '/getTopics'
     }).then(function success(res){
       callback(res.data)
-    }, function vaginas(){
-      console.log('could not get the topics');
+    }, function failed(){
+      console.log('blah blah could not get the topics');
     })
   },
   topicObject.getTheTopic = function(id, callback){
@@ -31,13 +32,14 @@ app.factory('topicFactory',['$http','$location', function($http, $location){
       console.log('failed to get the topic');
     })
   },
-  topicObject.post = function(data, callback){
+  topicObject.post = function(data, callback, redirect){
     $http({
       method:"POST",
       url:'/postAnswer',
       data: data
     }).then(function(res){
       callback()
+      redirect()
     },function fail(){
       console.log('Answer fucked up analy!');
     })
@@ -51,6 +53,17 @@ app.factory('topicFactory',['$http','$location', function($http, $location){
       callback()
     },function fail(){
       console.log('Comments fucked up');
+    })
+  }
+  topicObject.like = function(data, callback){
+    $http({
+      method:'POST',
+      url:'/like',
+      data:data
+    }).then(function(res){
+      callback(res.data)
+    },function fail(){
+      console.log('like did not work');
     })
   }
   return topicObject;

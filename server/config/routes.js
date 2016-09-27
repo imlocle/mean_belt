@@ -12,7 +12,7 @@ module.exports = function(app){
   app.get('/getTopics', topic.getAll);
   app.get('/getTheTopic/:id', topic.getTheTopic);
   app.post('/postAnswer', topic.postAnswer);
-  app.post('/addComment/:id', topic.addComment)
+  app.post('/like', topic.like)
 }
 function userAuth(req,res,next){
   if (req.session.user){

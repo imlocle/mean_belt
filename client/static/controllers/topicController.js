@@ -1,5 +1,10 @@
 app.controller('topicController', ['$http','$scope','userFactory', 'topicFactory', '$location','$routeParams', function($http, $scope, userFactory,topicFactory, $location, $routeParams){
-
+  var redirector = function(){
+    $location.url('/dashboard')
+  }
+  $scope.logout = function(){
+    userFactory.logout();
+  }
   $scope.getUser = function(){
     userFactory.getUser(function(data){
       $scope.user = data
@@ -10,25 +15,21 @@ app.controller('topicController', ['$http','$scope','userFactory', 'topicFactory
   $scope.getTheTopic = function(){
     topicFactory.getTheTopic($routeParams.id, function(data){
       $scope.topic = data
-      console.log('CHECK THIS OUT!!!!');
-      console.log(data);
     })
   }
   $scope.post = function(data){
-    console.log('WE GOT HERE IN CONTROLLER');
-    console.log(data);
-    topicFactory.post(data, function(){
-      $scope.getTheTopic();
-    })
+    $scope.err = []
+    if(data.answer.length < 5){
+      $scope.err.push('Answer must be longer than 5 characters');
+    } else{
+      topicFactory.post(data, function(){
+        $scope.getTheTopic();
+      }, redirector)
+    }
   }
-  $scope.addComment = function(data,id){
-    topicFactory.addComment(data, id, function(){
-      $scope.getTheTopic();
-    })
-  }
-  $scope.incrementL = function(data){
-    topicFactory.incrementL(data, function(){
-      $scope.getTheTopic();
+  $scope.like = function(data){
+    topicFactory.like(data, function(){
+      $scope.getTheTopic(); //there is something wrong with this callback
     })
   }
 

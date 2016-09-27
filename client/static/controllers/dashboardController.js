@@ -6,10 +6,12 @@ app.controller('dashboardController', ['$http','$scope','userFactory', 'topicFac
     userFactory.logout();
   }
   $scope.createTopic = function(data){
-    topicFactory.createTopic(data, function(){
-      $scope.getAll();
-      $scope.topic = {}
-    })
+    $scope.err = [];
+    if(data.topic.length < 10){
+      $scope.err.push('Question must be 10 characters or longer');
+    } else{
+      topicFactory.createTopic(data, redirector);
+    }
   }
   $scope.getAll = function(){
     topicFactory.getAll(function(data){
@@ -22,7 +24,6 @@ app.controller('dashboardController', ['$http','$scope','userFactory', 'topicFac
     })
   }
   $scope.getUser();
-
-$scope.getAll();
+  $scope.getAll();
 
 }])
